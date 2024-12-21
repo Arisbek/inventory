@@ -4,9 +4,11 @@ import com.example.Inventory.model.Product;
 import com.example.Inventory.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.http.ResponseEntity;
 import jakarta.validation.Valid;
 import java.util.List;
+import java.util.Map;
+import org.springframework.http.HttpStatus;
 
 @RestController
 @RequestMapping("/api/products")
@@ -25,8 +27,12 @@ public class ProductController {
     }
 
     @PostMapping
-    public Product createProduct(@Valid @RequestBody Product product) {
-        return productService.saveProduct(product);
+    public ResponseEntity<Product> createProduct(@RequestBody Map<String, String> request) {
+        String productName = request.get("name");
+        String categoryName = request.get("categoryName");
+
+        Product createdProduct = productService.createProduct(productName, categoryName);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdProduct);
     }
 
     @PutMapping("/{id}")
