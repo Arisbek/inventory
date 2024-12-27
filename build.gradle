@@ -28,6 +28,10 @@ dependencies {
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
 }
 
+dependencyLocking {
+	lockAllConfigurations()
+}
+
 tasks.named('test') {
 	useJUnitPlatform()
 }
